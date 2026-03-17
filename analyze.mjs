@@ -7,20 +7,13 @@ import fs from 'fs';
   
   console.log("Navigating to https://xerpredict.xsone.de/ ...");
   await page.goto('https://xerpredict.xsone.de/', { waitUntil: 'networkidle' });
-  
-  const loginHtml = await page.content();
-  fs.writeFileSync('login_page.html', loginHtml);
-  console.log("Saved login page HTML.");
 
   // Fill in login details
   console.log("Logging in...");
-  // Need to find selectors. Let's look for common ones or just generic input types.
-  // Using generic locators for username/email and password
   const emailInputs = await page.locator('input[type="email"], input[name*="user"], input[name*="mail"]').count();
   if (emailInputs > 0) {
     await page.locator('input[type="email"], input[name*="user"], input[name*="mail"]').first().fill('quatelio@xerpredict.com');
   } else {
-    // try text input
     await page.locator('input[type="text"]').first().fill('quatelio@xerpredict.com');
   }
   
@@ -30,23 +23,55 @@ import fs from 'fs';
   }
 
   // Find and click the submit button
-  const submitBtn = page.locator('button[type="submit"], button:has-text("Login"), button:has-text("Anmelden")').first();
+  const submitBtn = page.locator('button[type="submit"], button:has-text("Login"), button:has-text("Anmelden"), button:has-text("Jetzt starten")').first();
   await submitBtn.click();
 
   console.log("Waiting for navigation or network idle...");
   try {
     await page.waitForLoadState('networkidle', { timeout: 15000 });
   } catch(e) {
-    console.log("Network idle timeout, proceeding anyway...");
+    console.log("Network idle timeout on dashboard, proceeding anyway...");
   }
-  
-  // Wait a bit to ensure rendering
-  await page.waitForTimeout(5000);
-  
-  const dashboardHtml = await page.content();
-  fs.writeFileSync('dashboard.html', dashboardHtml);
-  await page.screenshot({ path: 'dashboard.png', fullPage: true });
-  console.log("Saved dashboard HTML and screenshot.");
+  await page.waitForTimeout(5000); // Give the dashboard time to render
+
+  // 1. AI Discovery
+  console.log("Navigating to AI Discovery...");
+  const aiDiscoveryBtn = page.locator('button[title="AI Discovery"]');
+  if (await aiDiscoveryBtn.count() > 0) {
+    await aiDiscoveryBtn.click();
+    await page.waitForTimeout(4000);
+    fs.writeFileSync('ai_discovery.html', await page.content());
+    await page.screenshot({ path: 'ai_discovery.png', fullPage: true });
+    console.log("Saved AI Discovery HTML and screenshot.");
+  } else {
+    console.log("Could not find AI Discovery button.");
+  }
+
+  // 2. BI Analytics Engine
+  console.log("Navigating to BI Analytics Engine...");
+  const biAnalyticsBtn = page.locator('button[title="BI Analytics Engine"]');
+  if (await biAnalyticsBtn.count() > 0) {
+    await biAnalyticsBtn.click();
+    await page.waitForTimeout(4000);
+    fs.writeFileSync('bi_analytics.html', await page.content());
+    await page.screenshot({ path: 'bi_analytics.png', fullPage: true });
+    console.log("Saved BI Analytics HTML and screenshot.");
+  } else {
+    console.log("Could not find BI Analytics button.");
+  }
+
+  // 3. Einstellungen
+  console.log("Navigating to Einstellungen...");
+  const settingsBtn = page.locator('button[title="Einstellungen"]');
+  if (await settingsBtn.count() > 0) {
+    await settingsBtn.click();
+    await page.waitForTimeout(4000);
+    fs.writeFileSync('settings.html', await page.content());
+    await page.screenshot({ path: 'settings.png', fullPage: true });
+    console.log("Saved Settings HTML and screenshot.");
+  } else {
+    console.log("Could not find Einstellungen button.");
+  }
 
   await browser.close();
 })();
