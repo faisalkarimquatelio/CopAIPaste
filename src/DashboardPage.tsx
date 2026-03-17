@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   X,
   LayoutDashboard,
@@ -30,6 +31,7 @@ import {
 } from 'lucide-react';
 
 const DashboardPage: React.FC = () => {
+  const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -68,7 +70,7 @@ const DashboardPage: React.FC = () => {
         <nav className="flex-1 p-2 space-y-0.5 overflow-y-auto overflow-x-hidden scrollbar-thin">
           <div>
             <button
-              title="xERPredict"
+              title="xERPredict" onClick={() => navigate("/dashboard")}
               className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all group relative overflow-hidden bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 shadow-sm"
             >
               <LayoutDashboard className="w-[18px] h-[18px] flex-shrink-0" />
@@ -77,7 +79,7 @@ const DashboardPage: React.FC = () => {
           </div>
           <div>
             <button
-              title="AI Discovery"
+              title="AI Discovery" onClick={() => navigate("/ai-discovery")}
               className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all group relative overflow-hidden text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white"
             >
               <Sparkles className="w-[18px] h-[18px] flex-shrink-0" />
@@ -87,7 +89,7 @@ const DashboardPage: React.FC = () => {
           </div>
           <div>
             <button
-              title="BI Analytics Engine"
+              title="BI Analytics Engine" onClick={() => navigate("/bi-analytics")}
               className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all group relative overflow-hidden text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white"
             >
               <ChartColumn className="w-[18px] h-[18px] flex-shrink-0" />
@@ -96,7 +98,7 @@ const DashboardPage: React.FC = () => {
           </div>
           <div>
             <button
-              title="Einstellungen"
+              title="Einstellungen" onClick={() => navigate("/settings")}
               className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all group relative overflow-hidden text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white"
             >
               <Settings className="w-[18px] h-[18px] flex-shrink-0" />

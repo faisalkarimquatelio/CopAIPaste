@@ -20,9 +20,16 @@ const LoginPage: React.FC = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
+  // Pre-calculate random values for particles to avoid hydration mismatches and impure function warnings
+  const [particles] = useState(() => Array.from({ length: 20 }).map(() => ({
+    left: `${Math.random() * 100}%`,
+    top: `${Math.random() * 100}%`,
+    animationDelay: `${Math.random() * 5}s`,
+    animationDuration: `${3 + Math.random() * 3}s`
+  })));
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real app this would call an API
     console.log('Login attempt', { email, password });
     navigate('/dashboard');
   };
@@ -38,16 +45,11 @@ const LoginPage: React.FC = () => {
       </div>
       
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {Array.from({ length: 20 }).map((_, i) => (
+        {particles.map((style, i) => (
           <div
             key={i}
             className="absolute w-1 h-1 bg-white/30 rounded-full animate-float"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${3 + Math.random() * 3}s`,
-            }}
+            style={style}
           ></div>
         ))}
       </div>

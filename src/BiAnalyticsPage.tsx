@@ -1,6 +1,8 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const BiAnalyticsPage: React.FC = () => {
+  const navigate = useNavigate();
 
   return (
     <>
@@ -62,7 +64,7 @@ const BiAnalyticsPage: React.FC = () => {
           >
             <div>
               <button
-                title="xERPredict"
+                title="xERPredict" onClick={() => navigate("/dashboard")}
                 className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all group relative overflow-hidden text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white"
               >
                 <svg
@@ -90,7 +92,7 @@ const BiAnalyticsPage: React.FC = () => {
             </div>
             <div>
               <button
-                title="AI Discovery"
+                title="AI Discovery" onClick={() => navigate("/ai-discovery")}
                 className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all group relative overflow-hidden text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white"
               >
                 <svg
@@ -169,7 +171,7 @@ const BiAnalyticsPage: React.FC = () => {
             </div>
             <div>
               <button
-                title="BI Analytics Engine"
+                title="BI Analytics Engine" onClick={() => navigate("/bi-analytics")}
                 className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all group relative overflow-hidden bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 shadow-sm"
               >
                 <svg
@@ -197,7 +199,7 @@ const BiAnalyticsPage: React.FC = () => {
             </div>
             <div>
               <button
-                title="Einstellungen"
+                title="Einstellungen" onClick={() => navigate("/settings")}
                 className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all group relative overflow-hidden text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white"
               >
                 <svg
